@@ -3,12 +3,12 @@ import os
 
 
 # Wagtail settings
-
-WAGTAIL_SITE_NAME = "Wagtail Docker"
+WAGTAIL_SITE_NAME = os.environ.get("SITE_NAME")
 
 # Base URL to use when referring to full URLs within the Wagtail admin backend -
 # e.g. in notification emails. Don't include '/admin' or a trailing slash
-BASE_URL = 'https://example.com'
+BASE_URL = os.environ.get("BASE_URL")
+WAGTAILADMIN_BASE_URL = os.environ.get("BASE_URL")
 
 PROJECT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 BASE_DIR = os.path.dirname(PROJECT_DIR)
