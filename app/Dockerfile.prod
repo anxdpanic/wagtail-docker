@@ -1,13 +1,21 @@
-# app/Dockerfile.prod
+FROM python:3.10-alpine
 
-# Pull the base image
-FROM python:3.8.5-alpine3.12
+# Set environment variables
+ENV PYTHONDONTWRITEBYTECODE 1
+ENV PYTHONUNBUFFERED 1
 
-# Create app directory
-RUN mkdir -p /home/app
+# Install server packages
+RUN apk update \
+    && apk add postgresql-dev gcc python3-dev musl-dev libffi-dev openssl-dev \
+    && apk add jpeg-dev libwebp-dev zlib-dev freetype-dev lcms2-dev openjpeg-dev \
+    && apk add tiff-dev tk-dev tcl-dev libxml2-dev libxslt-dev libxml2
+
+
+# add the app users pip installation directory to path
+ENV PATH="/home/app/.local/bin:$PATH"
 
 # Create app user
-RUN addgroup -S app && adduser -S app -G app
+RUN addgroup -S app && adduser -S app -G app -h /home/app
 
 # Create directories
 ENV HOME=/home/app
@@ -17,22 +25,8 @@ RUN mkdir $APP_HOME/static
 RUN mkdir $APP_HOME/media
 WORKDIR $APP_HOME
 
-# Set environment variables
-ENV PYTHONDONTWRITEBYTECODE 1
-ENV PYTHONUNBUFFERED 1
-
-# Install server packages
-RUN apk update \
-    && apk add postgresql-dev gcc python3-dev musl-dev libffi-dev openssl-dev \
-    && apk add jpeg-dev libwebp-dev zlib-dev freetype-dev lcms2-dev openjpeg-dev tiff-dev tk-dev tcl-dev libxml2-dev libxslt-dev libxml2
-
-# Install Python packages
-RUN pip install pip --upgrade
-COPY ./requirements.txt $APP_HOME
-RUN pip install -r requirements.txt
-
 # Copy production entrypoint
-COPY entrypoint.prod.sh $APP_HOME
+COPY entrypoint.prod.sh $APP_HOME/entrypoint.sh
 
 # Copy project
 COPY . $APP_HOME
@@ -43,5 +37,10 @@ RUN chown -R app:app $APP_HOME
 # Change user to app
 USER app
 
+# Install Python packages
+RUN pip install pip --upgrade
+COPY ./requirements.txt $APP_HOME
+RUN pip install -r requirements.txt
+
 # Run entrypoint.prod.sh
-ENTRYPOINT ["/home/app/web/entrypoint.prod.sh"]
+ENTRYPOINT ["/home/app/web/entrypoint.sh"]

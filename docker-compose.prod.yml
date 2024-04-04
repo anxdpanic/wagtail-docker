@@ -3,27 +3,26 @@ version: '3.7'
 
 services:
   web:
-    restart: always
+    container_name: wagtail
+    restart: unless-stopped
     build:
       context: app
       dockerfile: Dockerfile.prod
     command: gunicorn app.wsgi:application --bind 0.0.0.0:8009
     volumes:
-      - /var/www/app/static:/home/app/web/static
-      - /var/www/app/media:/home/app/web/media
+      - ./var/www/static:/home/app/web/static
+      - ./var/www/media:/home/app/web/media
     ports:
-      - 8009:8009
+      - "8009:8009/tcp"
     env_file:
       - .env.prod
-    depends_on:
-      - db
+
   db:
-    restart: always
-    image: postgres:12.2-alpine
+    container_name: wagtail-postgres
+    restart: unless-stopped
+    image: postgres:16-alpine
     volumes:
-      - postgres_data_prod:/var/lib/postgresql/data/
+      - ./postgresql/data/:/var/lib/postgresql/data/
     env_file:
       - .env.prod.db
-
-volumes:
-  postgres_data_prod:
+    network_mode: "service:web"
