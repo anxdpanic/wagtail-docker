@@ -10,6 +10,7 @@ services:
       - ./dev/app/:/usr/src/app/
     ports:
       - "8000:8000/tcp"
+      - "5432:5432/tcp"
     env_file:
       - .env.dev
 

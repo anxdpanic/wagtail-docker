@@ -2,18 +2,9 @@
 import os
 
 
-# Wagtail settings
-WAGTAIL_SITE_NAME = os.environ.get("SITE_NAME")
-
-# Base URL to use when referring to full URLs within the Wagtail admin backend -
-# e.g. in notification emails. Don't include '/admin' or a trailing slash
-BASE_URL = os.environ.get("BASE_URL")
-WAGTAILADMIN_BASE_URL = os.environ.get("BASE_URL")
-
 PROJECT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 BASE_DIR = os.path.dirname(PROJECT_DIR)
 
-# Application definition
 INSTALLED_APPS = [
     'home',
     'search',
@@ -76,10 +67,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'app.wsgi.application'
 
-
-# Password validation
-# https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
-
 AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
@@ -96,22 +83,12 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
-# Internationalization
-# https://docs.djangoproject.com/en/3.1/topics/i18n/
-
-LANGUAGE_CODE = 'en-us'
-
-TIME_ZONE = 'UTC'
-
 USE_I18N = True
 
 USE_L10N = True
 
 USE_TZ = True
 
-
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATICFILES_FINDERS = [
     'django.contrib.staticfiles.finders.FileSystemFinder',
@@ -122,9 +99,6 @@ STATICFILES_DIRS = [
     os.path.join(PROJECT_DIR, 'static'),
 ]
 
-# ManifestStaticFilesStorage is recommended in production, to prevent outdated
-# JavaScript / CSS assets being served from cache (e.g. after a Wagtail upgrade).
-# See https://docs.djangoproject.com/en/3.1/ref/contrib/staticfiles/#manifeststaticfilesstorage
 STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.ManifestStaticFilesStorage'
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
