@@ -1,4 +1,6 @@
+# noinspection PyUnresolvedReferences
 from .base import *
+# noinspection PyUnresolvedReferences
 from .env import *
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'

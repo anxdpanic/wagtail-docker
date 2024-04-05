@@ -1,7 +1,9 @@
 # Wagtail Docker Development Environment
+
 An empty and up-to-date Wagtail project as a Docker environment with PostgreSQL
 
 ### Setup development environment
+
 1. Rename .env.dev.example and .env.dev.db.example to .env.dev and .env.dev.db
 1. Generate your Django secret key and put it in .env.dev (Generator: https://djecrety.ir)
 1. Build and run Docker containers:
@@ -16,7 +18,7 @@ An empty and up-to-date Wagtail project as a Docker environment with PostgreSQL
    ```sh
    $ docker-compose logs -f wagtail
    ```
-1. Migrate    
+1. Migrate
     ```sh
     $ docker-compose exec wagtail python manage.py makemigrations --settings=app.settings.dev
     ```
@@ -27,7 +29,9 @@ An empty and up-to-date Wagtail project as a Docker environment with PostgreSQL
     ```sh
     $ docker-compose down
     ```
+
 ### Setup production environment
+
 1. Rename .env.prod.example and .env.prod.db.example to .env.prod and .env.prod.db
 1. Generate your Django secret key and put it in .env.dev.prod (Generator: https://djecrety.ir)
 1. Build and run Docker containers:

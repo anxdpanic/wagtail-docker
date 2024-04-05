@@ -2,6 +2,7 @@
 from django.db import migrations
 
 
+# noinspection PyUnusedLocal
 def create_homepage(apps, schema_editor):
     # Get models
     ContentType = apps.get_model('contenttypes.ContentType')
@@ -48,7 +49,6 @@ def remove_homepage(apps, schema_editor):
 
 
 class Migration(migrations.Migration):
-
     run_before = [
         ('wagtailcore', '0053_locale_model'),
     ]
